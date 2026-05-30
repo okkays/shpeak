@@ -3,8 +3,12 @@ import tasks
 
 app = flask.Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    to_say = flask.request.args.get('to_say')
+
+@app.route("/say", methods=['POST'])
+def say():
+    request_data = flask.request.get_json()
+    to_say = request_data['to_say']
+    if not to_say:
+        flask.abort(400)
     tasks.say(to_say)
-    return flask.jsonify({'status': 'ok'})
+    return ('', 204)
