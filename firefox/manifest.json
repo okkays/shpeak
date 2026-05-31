@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Shpeak",
+  "version": "1.0",
+
+  "description": "Locally run LLM-based text-to-speak of highlighted text",
+
+  "icons": {
+    "48": "icons/speak.webp"
+  },
+
+  "permissions": [
+    "activeTab",
+    "contextMenus"
+  ],
+
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
