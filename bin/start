@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_DIR"
+
+source "$REPO_DIR/.venv/bin/activate"
+
+celery -A tasks worker --loglevel=info \
+  --logfile="$REPO_DIR/logs/celery.log" \
+  --pidfile="$REPO_DIR/tmp/celery.pid" &
+
+gunicorn "app:app" \
+  --bind 127.0.0.1:9253 \
+  --log-file "$REPO_DIR/logs/flask.log" \
+  --pid "$REPO_DIR/tmp/flask.pid"
